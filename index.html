@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratório HTML & CSS - Minha Matéria Favorita</title>
+
+    <style>
+        :root {
+            --bg-dark: #13131f;
+            --panel-bg: #1e1e2f;
+            --card-bg: #27273d;
+            --accent: #a5b4fc;
+            --accent-hover: #818cf8;
+            --neon-cyan: #38bdf8;
+            --neon-pink: #f472b6;
+            --success: #00ff7f;
+            --warning: #ffd166;
+            --danger: #ff5c77;
+            --text-main: #f0f0f0;
+            --text-muted: #b0b0c8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header-container {
+            max-width: 1240px;
+            margin: 0 auto 18px auto;
+            background: var(--panel-bg);
+            padding: 20px 26px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+            border: 1px solid rgba(165, 180, 252, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            margin: 0 0 5px 0;
+            color: var(--accent);
+            font-size: 1.55rem;
+        }
+
+        .header-title p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .materia-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(165, 180, 252, 0.3);
+        }
+
+        .materia-selector select {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            border: 1px solid var(--accent);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        /* Checklist de requisitos HTML + CSS */
+        .checklist-bar {
+            max-width: 1240px;
+            margin: 0 auto 20px auto;
+            background: var(--panel-bg);
+            padding: 14px 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checklist-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checklist-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            min-width: 90px;
+            color: var(--accent);
+        }
+
+        .checklist-label.css-tag {
+            color: var(--neon-pink);
+        }
+
+        .check-badge {
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .check-badge.done {
+            background: rgba(0, 255, 127, 0.12);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        /* Grid Principal */
+        .workspace {
+            max-width: 1240px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.08fr 0.92fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(165, 180, 252, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel h2 {
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        /* Abas de Navegação */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #13131f;
+            border-color: var(--accent);
+        }
+
+        .tab-btn.css-tab.active {
+            background: var(--neon-pink);
+            color: #13131f;
+            border-color: var(--neon-pink);
+        }
+
+        /* Paleta de Blocos HTML */
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .tag-block {
+            background: var(--card-bg);
+            border: 1px dashed var(--accent);
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: grab;
+            text-align: left;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .tag-block:hover {
+            background: rgba(165, 180, 252, 0.15);
+            transform: translateY(-2px);
+            border-style: solid;
+        }
+
+        .tag-block:active {
+            cursor: grabbing;
+        }
+
+        .tag-block code {
+            display: inline-block;
+            color: var(--neon-cyan);
+            background: var(--bg-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .tag-block span {
+            display: block;
+            font-size: 0.84rem;
+            color: var(--text-main);
+        }
+
+        /* Área de Montagem (Dropzone) */
+        .dropzone {
+            min-height: 360px;
+            background: var(--bg-dark);
+            border: 2px dashed rgba(165, 180, 252, 0.35);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.25s ease;
+        }
+
+        .dropzone.drag-over {
+            border-color: var(--neon-cyan);
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .empty-hint {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 80px 20px;
+            font-size: 0.95rem;
+        }
+
+        /* Cartão de item adicionado */
+        .added-item {
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            animation: popIn 0.25s ease-out;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .item-header code {
+            color: var(--neon-cyan);
+            background: var(--bg-dark);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .item-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-mini {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-mini:hover {
+            border-color: var(--accent);
+        }
+
+        .btn-mini.delete:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .added-item input[type="text"],
+        .added-item textarea,
+        .added-item select {
+            width: 100%;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            border: 1px solid rgba(165, 180, 252, 0.3);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .added-item textarea {
+            resize: vertical;
+            min-height: 55px;
+        }
+
+        .inline-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.86rem;
+            color: var(--neon-pink);
+            background: rgba(244, 114, 182, 0.08);
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(244, 114, 182, 0.25);
+        }
+
+        .inline-option select,
+        .inline-option input[type="color"] {
+            margin-top: 0;
+            padding: 4px 8px;
+            width: auto;
+        }
+
+        /* Painel Estúdio CSS */
+        .css-studio {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .css-card {
+            background: var(--card-bg);
+            border-left: 4px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .css-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            color: var(--neon-pink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .css-card h3 code {
+            background: var(--bg-dark);
+            color: var(--neon-cyan);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .css-card p {
+            margin: 0 0 10px 0;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .css-control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .css-control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-dark);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.88rem;
+        }
+
+        .css-control-group input[type="color"] {
+            border: none;
+            width: 32px;
+            height: 26px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .css-control-group select {
+            background: var(--panel-bg);
+            color: var(--text-main);
+            border: 1px solid var(--neon-pink);
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Simulador de Navegador */
+        .browser-mockup {
+            background: #ffffff;
+            color: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            min-height: 460px;
+            border: 1px solid #334155;
+        }
+
+        .browser-bar {
+            background: #e2e8f0;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .browser-url {
+            background: #ffffff;
+            color: #64748b;
+            font-size: 0.8rem;
+            padding: 3px 12px;
+            border-radius: 12px;
+            flex: 1;
+            margin-left: 6px;
+        }
+
+        .preview-content {
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .preview-content h1 {
+            margin-top: 0;
+            padding-bottom: 6px;
+            border-bottom: 2px solid currentColor;
+        }
+
+        .preview-content h2 {
+            margin-top: 14px;
+        }
+
+        .preview-content img {
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: width 0.3s ease;
+        }
+
+        .preview-content a {
+            display: inline-block;
+            margin: 6px 0;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        /* Caixa de Código HTML + CSS */
+        .code-view {
+            display: none;
+            background: #0d0d16;
+            color: #a5b4fc;
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            min-height: 460px;
+            max-height: 560px;
+            overflow: auto;
+            white-space: pre-wrap;
+            border: 1px solid rgba(165, 180, 252, 0.25);
+        }
+
+        /* Botões Inferiores */
+        .actions-footer {
+            max-width: 1240px;
+            margin: 20px auto 0 auto;
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background-color: var(--accent);
+            color: #13131f;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.25s;
+            margin: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            padding: 12px 20px;
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 0.95rem;
+            border: 1px solid rgba(165, 180, 252, 0.35);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.25s;
+            margin: 5px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        #feedbackAtividade {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 920px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-container">
+        <div class="header-title">
+            <h1>Laboratório HTML & CSS • Minha Matéria Favorita</h1>
+            <p>Monte a estrutura em HTML, personalize cores, tamanhos e fontes no CSS e acompanhe o código ao vivo!</p>
+        </div>
+
+        <div class="materia-selector">
+            <label for="materiaSelect"><strong>Matéria:</strong></label>
+            <select id="materiaSelect" onchange="renderizarTudo()">
+                <option value="Ciências / Biologia">Ciências / Biologia</option>
+                <option value="História">História</option>
+                <option value="Geografia">Geografia</option>
+                <option value="Matemática">Matemática</option>
+                <option value="Artes">Artes</option>
+                <option value="Língua Portuguesa">Língua Portuguesa</option>
+                <option value="Educação Física">Educação Física</option>
+                <option value="Robótica / Programação">Robótica / Programação</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Barra de Requisitos HTML + CSS -->
+    <div class="checklist-bar">
+        <div class="checklist-row">
+            <span class="checklist-label">Estrutura HTML:</span>
+            <span class="check-badge" id="req-titulo">⬜ Título e Subtítulo</span>
+            <span class="check-badge" id="req-imagem">⬜ Imagens (2+)</span>
+            <span class="check-badge" id="req-paragrafo">⬜ Parágrafos (2+)</span>
+            <span class="check-badge" id="req-link">⬜ Links</span>
+        </div>
+        <div class="checklist-row">
+            <span class="checklist-label css-tag">Estilos CSS:</span>
+            <span class="check-badge" id="css-cores">⬜ 1. Cores nos títulos</span>
+            <span class="check-badge" id="css-tamanhos">⬜ 2. Imagens de tamanhos diferentes</span>
+            <span class="check-badge" id="css-fontes">⬜ 3. Parágrafos com fontes diferentes</span>
+            <span class="check-badge" id="css-blank">⬜ 4. Link abrindo em nova aba (_blank)</span>
+        </div>
+    </div>
+
+    <div class="workspace">
+
+        <!-- COLUNA ESQUERDA: Abas HTML e CSS -->
+        <div class="panel">
+            <div class="tabs">
+                <button type="button" class="tab-btn active" id="btnAbaHtml" onclick="alternarAbaEditor('html')">
+                    🧱 1. Estrutura HTML
+                </button>
+                <button type="button" class="tab-btn css-tab" id="btnAbaCss" onclick="alternarAbaEditor('css')">
+                    🎨 2. Estilizar com CSS
+                </button>
+            </div>
+
+            <!-- ABA 1: EDITOR HTML -->
+            <div id="editorHtml">
+                <h2>Escolha as Tags HTML (Arraste ou Clique)</h2>
+
+                <div class="palette">
+                    <div class="tag-block" draggable="true" ondragstart="iniciarArraste(event, 'h1')" onclick="adicionarBloco('h1')">
+                        <code>&lt;h1&gt;</code>
+                        <span>Título Principal</span>
+                    </div>
+
+                    <div class="tag-block" draggable="true" ondragstart="iniciarArraste(event, 'h2')" onclick="adicionarBloco('h2')">
+                        <code>&lt;h2&gt;</code>
+                        <span>Subtítulo</span>
+                    </div>
+
+                    <div class="tag-block" draggable="true" ondragstart="iniciarArraste(event, 'img')" onclick="adicionarBloco('img')">
+                        <code>&lt;img&gt;</code>
+                        <span>Imagem</span>
+                    </div>
+
+                    <div class="tag-block" draggable="true" ondragstart="iniciarArraste(event, 'p')" onclick="adicionarBloco('p')">
+                        <code>&lt;p&gt;</code>
+                        <span>Parágrafo</span>
+                    </div>
+
+                    <div class="tag-block" draggable="true" ondragstart="iniciarArraste(event, 'a')" onclick="adicionarBloco('a')">
+                        <code>&lt;a&gt;</code>
+                        <span>Link de Pesquisa</span>
+                    </div>
+                </div>
+
+                <h2>Estrutura da Sua Página (Solte aqui)</h2>
+
+                <div class="dropzone" id="dropzone" ondragover="permitirSoltar(event)" ondragleave="sairSoltar(event)" ondrop="soltarBloco(event)">
+                    <div class="empty-hint" id="emptyHint">
+                        Arraste os blocos acima para cá ou clique neles para montar sua página!
+                    </div>
+                    <div id="listaBlocos"></div>
+                </div>
+            </div>
+
+            <!-- ABA 2: ESTÚDIO CSS -->
+            <div class="css-studio" id="editorCss">
+                <!-- Requisito CSS 1 -->
+                <div class="css-card">
+                    <h3>1. Cores nos Títulos <code>h1 { color: ... }</code></h3>
+                    <p>Escolha cores diferentes do preto padrão para destacar o título e o subtítulo:</p>
+                    <div class="css-control-row">
+                        <label class="css-control-group">
+                            <span>Cor do Título (&lt;h1&gt;):</span>
+                            <input type="color" id="corH1" value="#0f172a" oninput="atualizarEstilosGlobais()">
+                            <code id="hexH1">#0f172a</code>
+                        </label>
+                        <label class="css-control-group">
+                            <span>Cor do Subtítulo (&lt;h2&gt;):</span>
+                            <input type="color" id="corH2" value="#334155" oninput="atualizarEstilosGlobais()">
+                            <code id="hexH2">#334155</code>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Requisito CSS 2 -->
+                <div class="css-card">
+                    <h3>2. Imagens de Tamanhos Diferentes <code>width: ...px</code></h3>
+                    <p>Adicione pelo menos <strong>2 imagens</strong> na aba HTML e defina larguras diferentes para elas (ex: Pequena e Grande):</p>
+                    <div id="listaControleImagens" style="font-size:0.88rem; color:var(--text-muted);">
+                        Nenhuma imagem adicionada ainda. Volte na aba HTML e clique em &lt;img&gt;.
+                    </div>
+                </div>
+
+                <!-- Requisito CSS 3 -->
+                <div class="css-card">
+                    <h3>3. Parágrafos com Fontes Diferentes <code>font-family</code></h3>
+                    <p>Adicione pelo menos <strong>2 parágrafos</strong> na aba HTML e escolha fontes diferentes entre eles:</p>
+                    <div id="listaControleParagrafos" style="font-size:0.88rem; color:var(--text-muted);">
+                        Nenhum parágrafo adicionado ainda. Volte na aba HTML e clique em &lt;p&gt;.
+                    </div>
+                </div>
+
+                <!-- Requisito CSS 4 -->
+                <div class="css-card">
+                    <h3>4. Links que Abrem em Nova Aba <code>target="_blank"</code></h3>
+                    <p>Personalize a cor dos links e verifique se a opção de abrir em página em branco está marcada:</p>
+                    <div class="css-control-row">
+                        <label class="css-control-group">
+                            <span>Cor do Link (&lt;a&gt;):</span>
+                            <input type="color" id="corLink" value="#4f46e5" oninput="atualizarEstilosGlobais()">
+                            <code id="hexLink">#4f46e5</code>
+                        </label>
+                    </div>
+                    <div id="listaControleLinks" style="margin-top:8px; font-size:0.88rem; color:var(--text-muted);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUNA DIREITA: Preview ao Vivo e Código HTML + CSS -->
+        <div class="panel">
+            <div class="tabs">
+                <button type="button" class="tab-btn active" id="tabPreview" onclick="alternarAbaPreview('preview')">
+                    👁️ Visualizar Página
+                </button>
+                <button type="button" class="tab-btn" id="tabCodigo" onclick="alternarAbaPreview('codigo')">
+                    💻 Ver Código HTML + CSS
+                </button>
+            </div>
+
+            <!-- Visualização como site -->
+            <div class="browser-mockup" id="viewPreview">
+                <div class="browser-bar">
+                    <span class="dot" style="background:#ff5f56;"></span>
+                    <span class="dot" style="background:#ffbd2e;"></span>
+                    <span class="dot" style="background:#27c93f;"></span>
+                    <div class="browser-url">minha-materia-favorita.html</div>
+                </div>
+                <div class="preview-content" id="previewContent">
+                    <p style="color:#94a3b8; font-style:italic;">Sua página aparecerá aqui em tempo real conforme você adicionar e estilizar os elementos...</p>
+                </div>
+            </div>
+
+            <!-- Código HTML + CSS Gerado -->
+            <pre class="code-view" id="viewCodigo"></pre>
+        </div>
+
+    </div>
+
+    <!-- Rodapé de Validação e Exportação -->
+    <div class="actions-footer">
+        <button type="button" class="btn-primary" onclick="validarAtividade()">✅ Validar Atividade (HTML + CSS)</button>
+        <button type="button" class="btn-secondary" onclick="copiarCodigoHTML()">📋 Copiar Código Completo</button>
+        <button type="button" class="btn-secondary" onclick="limparTudo()">🗑️ Recomeçar</button>
+
+        <div id="feedbackAtividade"></div>
+    </div>
+
+    <script>
+        let blocos = [];
+        let contadorId = 1;
+
+        const estilosGlobais = {
+            corH1: "#0f172a",
+            corH2: "#334155",
+            corLink: "#4f46e5"
+        };
+
+        const imagensSugeridas = {
+            "Ciências": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=700&q=80",
+            "História": "https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=700&q=80",
+            "Geografia": "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=700&q=80",
+            "Matemática": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=700&q=80",
+            "Artes": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=700&q=80",
+            "Robótica": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80"
+        };
+
+        const fontesDisponiveis = [
+            { label: "Arial (Sem Serifa)", valor: "Arial, sans-serif", classe: "fonte-arial" },
+            { label: "Georgia (Com Serifa)", valor: "Georgia, serif", classe: "fonte-georgia" },
+            { label: "Courier New (Máquina)", valor: "'Courier New', monospace", classe: "fonte-courier" },
+            { label: "Verdana (Moderna)", valor: "Verdana, sans-serif", classe: "fonte-verdana" }
+        ];
+
+        const tamanhosImagem = [
+            { label: "Pequena (180px)", valor: "180px", classe: "img-pequena" },
+            { label: "Média (320px)", valor: "320px", classe: "img-media" },
+            { label: "Grande (480px)", valor: "480px", classe: "img-grande" }
+        ];
+
+        function iniciarArraste(event, tipo) {
+            event.dataTransfer.setData("text/plain", tipo);
+        }
+
+        function permitirSoltar(event) {
+            event.preventDefault();
+            document.getElementById("dropzone").classList.add("drag-over");
+        }
+
+        function sairSoltar(event) {
+            document.getElementById("dropzone").classList.remove("drag-over");
+        }
+
+        function soltarBloco(event) {
+            event.preventDefault();
+            document.getElementById("dropzone").classList.remove("drag-over");
+            const tipo = event.dataTransfer.getData("text/plain");
+            if (tipo) {
+                adicionarBloco(tipo);
+            }
+        }
+
+        function adicionarBloco(tipo) {
+            const materia = document.getElementById("materiaSelect").value;
+            const id = contadorId++;
+
+            let novoBloco = { id, tipo };
+
+            if (tipo === "h1") {
+                novoBloco.texto = `Minha Matéria Favorita: ${materia}`;
+            } else if (tipo === "h2") {
+                novoBloco.texto = `O que mais gosto de aprender em ${materia}`;
+            } else if (tipo === "p") {
+                const qtdParagrafos = blocos.filter(b => b.tipo === "p").length;
+                novoBloco.texto = qtdParagrafos === 0
+                    ? `Eu gosto muito de ${materia} porque as aulas são dinâmicas e ajudam a entender o mundo.`
+                    : `Além disso, em ${materia} fazemos atividades práticas muito interessantes.`;
+                novoBloco.fonte = fontesDisponiveis[0].valor;
+            } else if (tipo === "img") {
+                const qtdImagens = blocos.filter(b => b.tipo === "img").length;
+                novoBloco.url = qtdImagens === 0 ? imagensSugeridas["Ciências"] : imagensSugeridas["Robótica"];
+                novoBloco.alt = `Imagem sobre ${materia}`;
+                novoBloco.largura = "320px";
+            } else if (tipo === "a") {
+                novoBloco.texto = `Pesquisar mais sobre ${materia} na Wikipédia`;
+                novoBloco.href = `https://pt.wikipedia.org/wiki/${encodeURIComponent(materia.split(" ")[0])}`;
+                novoBloco.novaAba = true;
+            }
+
+            blocos.push(novoBloco);
+            renderizarTudo();
+        }
+
+        function atualizarCampo(id, campo, valor) {
+            const item = blocos.find(b => b.id === id);
+            if (item) {
+                item[campo] = valor;
+                atualizarPreviewECodigo();
+                atualizarChecklist();
+                renderizarControlesCss();
+            }
+        }
+
+        function atualizarEstilosGlobais() {
+            estilosGlobais.corH1 = document.getElementById("corH1").value;
+            estilosGlobais.corH2 = document.getElementById("corH2").value;
+            estilosGlobais.corLink = document.getElementById("corLink").value;
+
+            document.getElementById("hexH1").textContent = estilosGlobais.corH1;
+            document.getElementById("hexH2").textContent = estilosGlobais.corH2;
+            document.getElementById("hexLink").textContent = estilosGlobais.corLink;
+
+            atualizarPreviewECodigo();
+            atualizarChecklist();
+        }
+
+        function removerBloco(id) {
+            blocos = blocos.filter(b => b.id !== id);
+            renderizarTudo();
+        }
+
+        function moverBloco(index, direcao) {
+            const novoIndex = index + direcao;
+            if (novoIndex < 0 || novoIndex >= blocos.length) return;
+            const temp = blocos[index];
+            blocos[index] = blocos[novoIndex];
+            blocos[novoIndex] = temp;
+            renderizarTudo();
+        }
+
+        function renderizarTudo() {
+            const lista = document.getElementById("listaBlocos");
+            const emptyHint = document.getElementById("emptyHint");
+
+            emptyHint.style.display = blocos.length === 0 ? "block" : "none";
+            lista.innerHTML = "";
+
+            blocos.forEach((bloco, index) => {
+                const div = document.createElement("div");
+                div.className = "added-item";
+
+                let tituloTag = "";
+                let camposHtml = "";
+
+                if (bloco.tipo === "h1") {
+                    tituloTag = "&lt;h1&gt; Título Principal";
+                    camposHtml = `<input type="text" value="${escaparAspas(bloco.texto)}" oninput="atualizarCampo(${bloco.id}, 'texto', this.value)" placeholder="Digite o título principal...">`;
+                } else if (bloco.tipo === "h2") {
+                    tituloTag = "&lt;h2&gt; Subtítulo";
+                    camposHtml = `<input type="text" value="${escaparAspas(bloco.texto)}" oninput="atualizarCampo(${bloco.id}, 'texto', this.value)" placeholder="Digite o subtítulo...">`;
+                } else if (bloco.tipo === "p") {
+                    tituloTag = "&lt;p&gt; Parágrafo";
+                    const opcoesFonte = fontesDisponiveis.map(f =>
+                        `<option value="${escaparAspas(f.valor)}" ${bloco.fonte === f.valor ? 'selected' : ''}>${f.label}</option>`
+                    ).join("");
+
+                    camposHtml = `
+                        <textarea oninput="atualizarCampo(${bloco.id}, 'texto', this.value)" placeholder="Escreva informações sobre a matéria...">${escaparHtml(bloco.texto)}</textarea>
+                        <div class="inline-option">
+                            <span>🎨 Fonte CSS (<code>font-family</code>):</span>
+                            <select onchange="atualizarCampo(${bloco.id}, 'fonte', this.value)">${opcoesFonte}</select>
+                        </div>
+                    `;
+                } else if (bloco.tipo === "img") {
+                    tituloTag = "&lt;img&gt; Imagem";
+                    const opcoesTamanho = tamanhosImagem.map(t =>
+                        `<option value="${t.valor}" ${bloco.largura === t.valor ? 'selected' : ''}>${t.label}</option>`
+                    ).join("");
+
+                    camposHtml = `
+                        <select onchange="atualizarCampo(${bloco.id}, 'url', this.value); renderizarTudo();">
+                            <option value="">-- Escolha uma imagem pronta ou cole um link abaixo --</option>
+                            <option value="${imagensSugeridas['Ciências']}" ${bloco.url === imagensSugeridas['Ciências'] ? 'selected' : ''}>Tema: Ciências / Laboratório</option>
+                            <option value="${imagensSugeridas['História']}" ${bloco.url === imagensSugeridas['História'] ? 'selected' : ''}>Tema: História / Livros Antigos</option>
+                            <option value="${imagensSugeridas['Geografia']}" ${bloco.url === imagensSugeridas['Geografia'] ? 'selected' : ''}>Tema: Geografia / Mapa</option>
+                            <option value="${imagensSugeridas['Matemática']}" ${bloco.url === imagensSugeridas['Matemática'] ? 'selected' : ''}>Tema: Matemática / Cálculos</option>
+                            <option value="${imagensSugeridas['Artes']}" ${bloco.url === imagensSugeridas['Artes'] ? 'selected' : ''}>Tema: Artes / Pintura</option>
+                            <option value="${imagensSugeridas['Robótica']}" ${bloco.url === imagensSugeridas['Robótica'] ? 'selected' : ''}>Tema: Robótica / Tecnologia</option>
+                        </select>
+                        <input type="text" value="${escaparAspas(bloco.url)}" oninput="atualizarCampo(${bloco.id}, 'url', this.value)" placeholder="Cole o endereço (URL) da imagem...">
+                        <div class="inline-option">
+                            <span>📐 Tamanho CSS (<code>width</code>):</span>
+                            <select onchange="atualizarCampo(${bloco.id}, 'largura', this.value)">${opcoesTamanho}</select>
+                        </div>
+                    `;
+                } else if (bloco.tipo === "a") {
+                    tituloTag = "&lt;a&gt; Link de Pesquisa";
+                    camposHtml = `
+                        <input type="text" value="${escaparAspas(bloco.texto)}" oninput="atualizarCampo(${bloco.id}, 'texto', this.value)" placeholder="Texto do link (Ex: Saiba mais aqui)">
+                        <input type="text" value="${escaparAspas(bloco.href)}" oninput="atualizarCampo(${bloco.id}, 'href', this.value)" placeholder="Endereço do site (https://...)">
+                        <label class="inline-option" style="cursor:pointer;">
+                            <input type="checkbox" ${bloco.novaAba ? 'checked' : ''} onchange="atualizarCampo(${bloco.id}, 'novaAba', this.checked)">
+                            <span>Abrir em uma nova aba em branco (<code>target="_blank"</code>)</span>
+                        </label>
+                    `;
+                }
+
+                div.innerHTML = `
+                    <div class="item-header">
+                        <code>${tituloTag}</code>
+                        <div class="item-controls">
+                            <button type="button" class="btn-mini" title="Subir" onclick="moverBloco(${index}, -1)">↑</button>
+                            <button type="button" class="btn-mini" title="Descer" onclick="moverBloco(${index}, 1)">↓</button>
+                            <button type="button" class="btn-mini delete" title="Remover" onclick="removerBloco(${bloco.id})">✕</button>
+                        </div>
+                    </div>
+                    ${camposHtml}
+                `;
+
+                lista.appendChild(div);
+            });
+
+            renderizarControlesCss();
+            atualizarPreviewECodigo();
+            atualizarChecklist();
+        }
+
+        function renderizarControlesCss() {
+            const imgs = blocos.filter(b => b.tipo === "img");
+            const containerImgs = document.getElementById("listaControleImagens");
+            if (imgs.length === 0) {
+                containerImgs.innerHTML = `Nenhuma imagem adicionada ainda. Volte na aba <strong>Estrutura HTML</strong> e adicione 2 imagens.`;
+            } else {
+                containerImgs.innerHTML = imgs.map((img, i) => `
+                    <div class="css-control-group" style="margin-bottom:6px; justify-content:space-between;">
+                        <span>Imagem #${i + 1}:</span>
+                        <select onchange="atualizarCampo(${img.id}, 'largura', this.value); renderizarTudo();">
+                            ${tamanhosImagem.map(t => `<option value="${t.valor}" ${img.largura === t.valor ? 'selected' : ''}>${t.label}</option>`).join("")}
+                        </select>
+                    </div>
+                `).join("");
+            }
+
+            const paragrafos = blocos.filter(b => b.tipo === "p");
+            const containerP = document.getElementById("listaControleParagrafos");
+            if (paragrafos.length === 0) {
+                containerP.innerHTML = `Nenhum parágrafo adicionado ainda. Volte na aba <strong>Estrutura HTML</strong> e adicione 2 parágrafos.`;
+            } else {
+                containerP.innerHTML = paragrafos.map((p, i) => `
+                    <div class="css-control-group" style="margin-bottom:6px; justify-content:space-between;">
+                        <span>Parágrafo #${i + 1}:</span>
+                        <select onchange="atualizarCampo(${p.id}, 'fonte', this.value); renderizarTudo();">
+                            ${fontesDisponiveis.map(f => `<option value="${escaparAspas(f.valor)}" ${p.fonte === f.valor ? 'selected' : ''}>${f.label}</option>`).join("")}
+                        </select>
+                    </div>
+                `).join("");
+            }
+
+            const links = blocos.filter(b => b.tipo === "a");
+            const containerLinks = document.getElementById("listaControleLinks");
+            if (links.length === 0) {
+                containerLinks.innerHTML = `Nenhum link adicionado ainda.`;
+            } else {
+                containerLinks.innerHTML = links.map((l, i) => `
+                    <label class="css-control-group" style="margin-bottom:6px; cursor:pointer;">
+                        <input type="checkbox" ${l.novaAba ? 'checked' : ''} onchange="atualizarCampo(${l.id}, 'novaAba', this.checked); renderizarTudo();">
+                        <span>Link #${i + 1}: Abrir em página em branco (<code>target="_blank"</code>)</span>
+                    </label>
+                `).join("");
+            }
+        }
+
+        function atualizarPreviewECodigo() {
+            const preview = document.getElementById("previewContent");
+            const codeView = document.getElementById("viewCodigo");
+            const materia = document.getElementById("materiaSelect").value;
+
+            if (blocos.length === 0) {
+                preview.innerHTML = `<p style="color:#94a3b8; font-style:italic;">Sua página aparecerá aqui em tempo real conforme você adicionar e estilizar os elementos...</p>`;
+                codeView.textContent = gerarDocumentoCompleto("", materia);
+                return;
+            }
+
+            let htmlPreview = "";
+            let htmlCodigo = "";
+
+            blocos.forEach(b => {
+                if (b.tipo === "h1") {
+                    htmlPreview += `<h1 style="color: ${estilosGlobais.corH1};">${escaparHtml(b.texto)}</h1>\n`;
+                    htmlCodigo += `    <h1>${escaparHtml(b.texto)}</h1>\n`;
+                } else if (b.tipo === "h2") {
+                    htmlPreview += `<h2 style="color: ${estilosGlobais.corH2};">${escaparHtml(b.texto)}</h2>\n`;
+                    htmlCodigo += `    <h2>${escaparHtml(b.texto)}</h2>\n`;
+                } else if (b.tipo === "p") {
+                    const objFonte = fontesDisponiveis.find(f => f.valor === b.fonte) || fontesDisponiveis[0];
+                    htmlPreview += `<p style="font-family: ${b.fonte}; color: #1e293b;">${escaparHtml(b.texto)}</p>\n`;
+                    htmlCodigo += `    <p class="${objFonte.classe}">${escaparHtml(b.texto)}</p>\n`;
+                } else if (b.tipo === "img") {
+                    const objTam = tamanhosImagem.find(t => t.valor === b.largura) || tamanhosImagem[1];
+                    htmlPreview += `<img src="${escaparAspas(b.url)}" alt="${escaparAspas(b.alt)}" style="width: ${b.largura}; max-width: 100%;">\n`;
+                    htmlCodigo += `    <img src="${escaparAspas(b.url)}" alt="${escaparAspas(b.alt)}" class="${objTam.classe}">\n`;
+                } else if (b.tipo === "a") {
+                    const targetAttr = b.novaAba ? ` target="_blank" rel="noopener noreferrer"` : "";
+                    const targetCode = b.novaAba ? ` target="_blank"` : "";
+                    htmlPreview += `<p><a href="${escaparAspas(b.href)}"${targetAttr} style="color: ${estilosGlobais.corLink};">${escaparHtml(b.texto)}</a></p>\n`;
+                    htmlCodigo += `    <a href="${escaparAspas(b.href)}"${targetCode}>${escaparHtml(b.texto)}</a>\n`;
+                }
+            });
+
+            preview.innerHTML = htmlPreview;
+            codeView.textContent = gerarDocumentoCompleto(htmlCodigo, materia);
+        }
+
+        function gerarDocumentoCompleto(corpo, materia = "Minha Matéria Favorita") {
+            return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>${materia}</title>
+    <style>
+        /* 1. Cores nos títulos */
+        h1 {
+            color: ${estilosGlobais.corH1};
+        }
+        h2 {
+            color: ${estilosGlobais.corH2};
+        }
+
+        /* 2. Imagens de tamanhos diferentes */
+        .img-pequena { width: 180px; }
+        .img-media   { width: 320px; }
+        .img-grande  { width: 480px; }
+
+        /* 3. Parágrafos com fontes diferentes */
+        .fonte-arial   { font-family: Arial, sans-serif; }
+        .fonte-georgia { font-family: Georgia, serif; }
+        .fonte-courier { font-family: 'Courier New', monospace; }
+        .fonte-verdana { font-family: Verdana, sans-serif; }
+
+        /* 4. Estilo dos links */
+        a {
+            color: ${estilosGlobais.corLink};
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+${corpo}</body>
+</html>`;
+        }
+
+        function atualizarChecklist() {
+            // Requisitos HTML
+            const temH1 = blocos.some(b => b.tipo === "h1" && b.texto.trim() !== "");
+            const temH2 = blocos.some(b => b.tipo === "h2" && b.texto.trim() !== "");
+            const imgs = blocos.filter(b => b.tipo === "img" && b.url.trim() !== "");
+            const paragrafos = blocos.filter(b => b.tipo === "p" && b.texto.trim() !== "");
+            const links = blocos.filter(b => b.tipo === "a" && b.texto.trim() !== "" && b.href.trim() !== "");
+
+            const okTituloHtml = temH1 && temH2;
+            const okImgHtml = imgs.length >= 2;
+            const okParagrafoHtml = paragrafos.length >= 2;
+            const okLinkHtml = links.length >= 1;
+
+            // Requisitos CSS
+            const okCoresTitulos = (temH1 || temH2) && (estilosGlobais.corH1 !== "#0f172a" || estilosGlobais.corH2 !== "#334155");
+            const largurasUnicas = new Set(imgs.map(i => i.largura));
+            const okTamanhosImg = imgs.length >= 2 && largurasUnicas.size >= 2;
+            const fontesUnicas = new Set(paragrafos.map(p => p.fonte));
+            const okFontesParagrafo = paragrafos.length >= 2 && fontesUnicas.size >= 2;
+            const okLinkBlank = links.length >= 1 && links.some(l => l.novaAba === true);
+
+            marcarBadge("req-titulo", okTituloHtml, "Título e Subtítulo");
+            marcarBadge("req-imagem", okImgHtml, "Imagens (2+)");
+            marcarBadge("req-paragrafo", okParagrafoHtml, "Parágrafos (2+)");
+            marcarBadge("req-link", okLinkHtml, "Links");
+
+            marcarBadge("css-cores", okCoresTitulos, "1. Cores nos títulos");
+            marcarBadge("css-tamanhos", okTamanhosImg, "2. Imagens de tamanhos diferentes");
+            marcarBadge("css-fontes", okFontesParagrafo, "3. Parágrafos com fontes diferentes");
+            marcarBadge("css-blank", okLinkBlank, "4. Link abrindo em nova aba (_blank)");
+
+            return {
+                okTituloHtml, okImgHtml, okParagrafoHtml, okLinkHtml,
+                okCoresTitulos, okTamanhosImg, okFontesParagrafo, okLinkBlank
+            };
+        }
+
+        function marcarBadge(id, concluido, texto) {
+            const el = document.getElementById(id);
+            if (concluido) {
+                el.classList.add("done");
+                el.textContent = "✅ " + texto;
+            } else {
+                el.classList.remove("done");
+                el.textContent = "⬜ " + texto;
+            }
+        }
+
+        function alternarAbaEditor(aba) {
+            const editorHtml = document.getElementById("editorHtml");
+            const editorCss = document.getElementById("editorCss");
+            const btnHtml = document.getElementById("btnAbaHtml");
+            const btnCss = document.getElementById("btnAbaCss");
+
+            if (aba === "html") {
+                editorHtml.style.display = "block";
+                editorCss.style.display = "none";
+                btnHtml.classList.add("active");
+                btnCss.classList.remove("active");
+            } else {
+                editorHtml.style.display = "none";
+                editorCss.style.display = "flex";
+                btnHtml.classList.remove("active");
+                btnCss.classList.add("active");
+                renderizarControlesCss();
+            }
+        }
+
+        function alternarAbaPreview(aba) {
+            const viewPreview = document.getElementById("viewPreview");
+            const viewCodigo = document.getElementById("viewCodigo");
+            const tabPreview = document.getElementById("tabPreview");
+            const tabCodigo = document.getElementById("tabCodigo");
+
+            if (aba === "preview") {
+                viewPreview.style.display = "block";
+                viewCodigo.style.display = "none";
+                tabPreview.classList.add("active");
+                tabCodigo.classList.remove("active");
+            } else {
+                viewPreview.style.display = "none";
+                viewCodigo.style.display = "block";
+                tabPreview.classList.remove("active");
+                tabCodigo.classList.add("active");
+            }
+        }
+
+        function validarAtividade() {
+            const s = atualizarChecklist();
+            const feedback = document.getElementById("feedbackAtividade");
+            let pendencias = [];
+
+            if (!s.okTituloHtml) pendencias.push("adicionar Título (<h1>) e Subtítulo (<h2>)");
+            if (!s.okCoresTitulos) pendencias.push("mudar a cor de pelo menos um título no CSS");
+            if (!s.okTamanhosImg) pendencias.push("ter pelo menos 2 imagens com tamanhos diferentes");
+            if (!s.okFontesParagrafo) pendencias.push("ter pelo menos 2 parágrafos com fontes diferentes");
+            if (!s.okLinkBlank) pendencias.push("adicionar um link configurado para abrir em nova aba (target=\"_blank\")");
+
+            if (pendencias.length === 0) {
+                feedback.style.color = "#00ff7f";
+                feedback.innerHTML = "🎉 Excelente! Você concluiu todos os requisitos de HTML e CSS com perfeição!";
+            } else {
+                feedback.style.color = "#ffd166";
+                feedback.innerHTML = `⚠️ Falta completar: ${pendencias.join("; ")}.`;
+            }
+        }
+
+        function copiarCodigoHTML() {
+            const codigo = document.getElementById("viewCodigo").textContent;
+            navigator.clipboard.writeText(codigo).then(() => {
+                const feedback = document.getElementById("feedbackAtividade");
+                feedback.style.color = "#38bdf8";
+                feedback.textContent = "📋 Código HTML + CSS copiado! Cole no seu arquivo .html para testar no navegador.";
+            });
+        }
+
+        function limparTudo() {
+            blocos = [];
+            estilosGlobais.corH1 = "#0f172a";
+            estilosGlobais.corH2 = "#334155";
+            estilosGlobais.corLink = "#4f46e5";
+            document.getElementById("corH1").value = "#0f172a";
+            document.getElementById("corH2").value = "#334155";
+            document.getElementById("corLink").value = "#4f46e5";
+            document.getElementById("hexH1").textContent = "#0f172a";
+            document.getElementById("hexH2").textContent = "#334155";
+            document.getElementById("hexLink").textContent = "#4f46e5";
+            document.getElementById("feedbackAtividade").textContent = "";
+            renderizarTudo();
+        }
+
+        function escaparHtml(str) {
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        function escaparAspas(str) {
+            return String(str || "").replace(/"/g, "&quot;");
+        }
+
+        // Inicializa visualização
+        atualizarPreviewECodigo();
+    </script>
+
+</body>
+
+</html>
